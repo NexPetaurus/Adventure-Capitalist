@@ -1,5 +1,5 @@
 <h1 align="center">
-  <p> Adventure Capatillist </p>
+  <p> Adventure Capatillist v1.0.0</p>
 </h1>
 
 
@@ -20,4 +20,11 @@ How To Download:
 4. Any Errors Just Email Me
 
 ------------------------------
+Updates:
+
+ - Uploaded To Github
+ - Added Title Screen
+ - Added More Cheats 
+ - Added Rebirths
+ - Added Meta Data To The File
 ```
