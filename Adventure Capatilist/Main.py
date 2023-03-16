@@ -1,3 +1,10 @@
+"""
+# @name Adventure Capitalist
+# @Author NexPetaurus
+# @Contact NexPetaurus@outlook.com
+# @Source https://github.com/NexPetaurus/Adventure-Capitalist
+# @Version 1.0.0
+"""
 
 # Recreating Adventure Capitalist But In Python
 # imports
