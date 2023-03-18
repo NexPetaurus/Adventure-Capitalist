@@ -27,4 +27,16 @@ Updates:
  - Added More Cheats 
  - Added Rebirths
  - Added Meta Data To The File
+ 
+ ----------------------------
+ Cheats:
+ 
+ - The Clear Money Cheat will do just that so be warned.
+ - The Add Money Cheat will add that amount of money
+ - Manager will buy all the managers
+ - Reset Will reset all your progress
+ - The +sd cheat will increace the speed at witch your bars travel
+ - The +rb will increace your rebirth count,
+ NOTE for the effects to take place you must hit the rebirth button 
+ by maxing out the managers or using cheats. 
 ```
