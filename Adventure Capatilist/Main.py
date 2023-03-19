@@ -3,7 +3,7 @@
 # @Author NexPetaurus
 # @Contact NexPetaurus@outlook.com
 # @Source https://github.com/NexPetaurus/Adventure-Capitalist
-# @Version 1.0.0
+# @Version 2.0.0
 """
 
 # Recreating Adventure Capitalist But In Python
@@ -18,7 +18,14 @@ pygame.init()
 
 # General Prints
 
-print("\nBe Aware Of Cheats And Read The README.md file to know how to use them!\n")
+print("Made By @NexPetaurus On Github Twitch And Youtube")
+
+Announcements = True
+
+if Announcements == True:
+    print("\n You Can Turn Off Announcements By Changing the code on line 16 to 'False'")
+
+    print("\nBe Aware Of Cheats And Read The README.md file to know how to use them!\n")
 pygame.font.get_fonts()
 
 # General Var
@@ -28,7 +35,7 @@ screen = pygame.display.set_mode([340, 450])
 pygame.display.set_caption(GameName)
 icon = pygame.image.load('money.png')
 pygame.display.set_icon(icon)
-Backround = black
+Backround = darkblue
 FrameRate = 60
 font = pygame.font.Font('freesansbold.ttf', 16)
 timer = pygame.time.Clock()
@@ -46,7 +53,12 @@ Game_Started = False
 
 # Start Screen
 while (Game_Started ==  False):
-    screen.fill(black)
+    screen.fill(Backround)
+
+    t = pygame.time.get_ticks() / 1 % 10000 # scale and loop time
+    x = t
+    y = math.sin(t/300.0) * 10 + 180       # scale sine wave
+    y = int(y)   
 
     OpeningFont = pygame.font.Font('freesansbold.ttf', 40)
     start_lable = OpeningFont.render(str("Click To Start"), True, purewhite)
@@ -59,13 +71,10 @@ while (Game_Started ==  False):
 
         if event.type == pygame.MOUSEBUTTONDOWN:
             Game_Started = True
-    
-    start_lableY = 180
-    undertextY = 220
 
 
-    screen.blit(start_lable,(40, start_lableY))
-    screen.blit(undertext,(75, undertextY))
+    screen.blit(start_lable,(40, y))
+    screen.blit(undertext,(75, 225))
 
     
 
@@ -83,29 +92,29 @@ def draw_task(color, y_coord, value, draw, length, speed):
         score += value
     task = pygame.draw.circle(screen, color, (30, y_coord), 20, 5)
     pygame.draw.rect(screen, color, [70, y_coord - 15, 200, 30])
-    pygame.draw.rect(screen, black, [75, y_coord - 10, 190, 20])
+    pygame.draw.rect(screen, Backround, [75, y_coord - 10, 190, 20])
     pygame.draw.rect(screen, color, [70, y_coord - 15, length, 30])
     value_text = font.render(str(round(value, 2)), True, white)
-    screen.blit(value_text, (16, y_coord - 10))
+    screen.blit(value_text, (17, y_coord - 9))
     return task, length, draw
 
 
 def draw_button(color, x_coord, cost, owned, manager_cost):
     color_button = pygame.draw.rect(screen, color, [x_coord, 340, 50, 30])
     color_cost = font.render(str(round(cost, 2)), True, black)
-    screen.blit(color_cost, (x_coord + 6, 350))
+    screen.blit(color_cost, (x_coord + 6, 348))
     if not owned:
         manager_button = pygame.draw.rect(screen, color, [x_coord, 405, 50, 30])
         manager_text = font.render(str(round(manager_cost, 2)), True, black)
-        screen.blit(manager_text, (x_coord + 2, 410))
+        screen.blit(manager_text, (x_coord + 2, 413))
 
     else:
 
-        manager_button = pygame.draw.rect(screen, black, [x_coord, 405, 50, 30])
+        manager_button = pygame.draw.rect(screen, Backround, [x_coord, 405, 50, 30])
 
     return color_button, manager_button
 
-    #Cheats
+#Cheats
 
 def draw_cheat_button(color, x_coord, y_coord):
     CheatTask = pygame.draw.rect(screen, color, [x_coord, y_coord, 60, 30])
@@ -157,12 +166,18 @@ def MoreGame(color, x_coord,y_coord):
     screen.blit(More_txt, (x_coord + 3, y_coord +9))
     return TaskMoreGame
 
-
+time_till_event = 0
 # Main Window
 
 while running:
 
     timer.tick(FrameRate)
+
+    time_till_event += 1
+    if time_till_event == 10000:
+        time_till_event = 0
+        if Announcements == True:
+            print("Made By @NexPetaurus On Github Twitch And Youtube")
 
     if green_owned and not draw_green:
         draw_green = True
@@ -179,9 +194,14 @@ while running:
         if event.type == pygame.QUIT:
             TruScore = math.trunc(score)
             ScoreSTR = str(TruScore)
-            print("\nYou Ended With: $" + ScoreSTR)
-            print("You Had A Total Of " + str(Rebirths) + " rebirths") #16400 to rebirth
-            print("This Brings Your Final Score To A Total Of: " + str(TruScore + (16400 * Rebirths))+"\n")
+            
+            if Announcements == True:
+                print("\nYou Ended With: $" + ScoreSTR)
+                print("You Had A Total Of " + str(Rebirths) + " rebirths") #16400 to rebirth
+                print("This Brings Your Final Score To A Total Of: " + str(TruScore + (16400 * Rebirths))+"\n")
+
+            else: 
+                print("Your Final Score Is A Total Of: " + str(TruScore + (16400 * Rebirths))+"\n")
             running = False
 
         if event.type == pygame.MOUSEBUTTONDOWN:
@@ -218,16 +238,19 @@ while running:
 
             if TaskMoreGame.collidepoint(event.pos):
                 Rebirths += 1
-                if Rebirths == 1:
-                    print("Your Have Achived Your: " + str(Rebirths), "Rebirth")
-                else:
-                    print("Your Have Achived Your: " + str(Rebirths), "Rebirth")
-                score = 100
-                green_value = 2 + Rebirths
-                red_value = 3 + Rebirths
-                orange_value = 5 + Rebirths
-                white_value = 6 + Rebirths
-                purple_value = 7 + Rebirths
+
+                if Announcements == True:
+                    if Rebirths == 1:
+                        print("Your Have Achived Your: " + str(Rebirths), "Rebirth")
+                    else:
+                        print("Your Have Achived Your: " + str(Rebirths), "Rebirth")
+                    score = 100
+
+                green_value = 2 + (Rebirths/4)
+                red_value = 3 + (Rebirths/4)
+                orange_value = 5 + (Rebirths/4)
+                white_value = 6 + (Rebirths/4)
+                purple_value = 7 + (Rebirths/4)
                 draw_green = False
                 draw_red = False
                 draw_orange = False
@@ -238,26 +261,26 @@ while running:
                 orange_length = 0
                 white_length = 0
                 purple_length = 0 
-                green_speed = 5 + Rebirths
-                red_speed = 4 + Rebirths
-                orange_speed = 3 + Rebirths
-                white_speed = 2 + Rebirths
-                purple_speed = 1 + Rebirths
+                green_speed = 5 + 1
+                red_speed = 4 + 1
+                orange_speed = 3 + 1
+                white_speed = 2 + 1
+                purple_speed = 1 + 1
                 green_cost = 0.1
                 green_owned = False
-                green_manager_cost = 100 - round(Rebirths/2)
+                green_manager_cost = 100 + round(Rebirths/2)
                 red_cost = 4
                 red_owned = False
-                red_manager_cost = 500 - round(Rebirths/2)
+                red_manager_cost = 500 + round(Rebirths/2)
                 orange_cost = 7
                 orange_owned = False
-                orange_manager_cost = 1800 - round(Rebirths/2)
+                orange_manager_cost = 1800 + round(Rebirths/2)
                 white_cost = 24
                 white_owned = False
-                white_manager_cost = 4000 - round(Rebirths/2)
+                white_manager_cost = 4000 + round(Rebirths/2)
                 purple_cost = 230
                 purple_owned = False
-                purple_manager_cost = 10000 - round(Rebirths/2)
+                purple_manager_cost = 10000 + round(Rebirths/2)
                 screen = pygame.display.set_mode([340, 450])
                 ScreenOpen = False
                 MoreButtonExpand = False
@@ -301,7 +324,8 @@ while running:
                 white_owned = True
                 MoreButtonExpand = True
                 screen = pygame.display.set_mode([600, 500])
-                print("Showing ReBirth Button")
+                if Announcements == True:
+                    print("Showing ReBirth Button")
                 
             if TaskReset.collidepoint(event.pos):
                 Rebirths = 0
@@ -350,19 +374,23 @@ while running:
                 if MoreButtonExpand == True and ScreenOpen == True and NextClicked == False:
                     screen = pygame.display.set_mode([340, 500])
                     ScreenOpen = False
-                    print("CHEATS TOGGLED")
+                    if Announcements == True:
+                        print("CHEATS TOGGLED")
                 elif MoreButtonExpand == True and ScreenOpen == False and NextClicked == False:
                     screen = pygame.display.set_mode([600, 500])
                     ScreenOpen = True
-                    print("CHEATS TOGGLED")
+                    if Announcements == True:
+                        print("CHEATS TOGGLED")
                 elif MoreButtonExpand == False and ScreenOpen == False and NextClicked == False:
                     screen = pygame.display.set_mode([600, 450])
                     ScreenOpen = True
-                    print("CHEATS TOGGLED")
+                    if Announcements == True:
+                        print("CHEATS TOGGLED")
                 elif MoreButtonExpand == False and ScreenOpen == True and NextClicked == False:
                     screen = pygame.display.set_mode([340, 450])
                     ScreenOpen = False
-                    print("CHEATS TOGGLED")
+                    if Announcements == True:
+                        print("CHEATS TOGGLED")
             
                     # 340 500 - MoreButtonExpand = True and ScreenOpen = True 
                     # 600 500 - MoreButtonExpand = True and ScreenOpen = False
@@ -372,19 +400,23 @@ while running:
                 elif MoreButtonExpand == True and ScreenOpen == True and NextClicked == True:
                     screen = pygame.display.set_mode([340, 900])
                     ScreenOpen = False
-                    print("CHEATS TOGGLED")
+                    if Announcements == True:
+                        print("CHEATS TOGGLED")
                 elif MoreButtonExpand == True and ScreenOpen == False and NextClicked == True:
                     screen = pygame.display.set_mode([600, 900])
                     ScreenOpen = True
-                    print("CHEATS TOGGLED")
+                    if Announcements == True:
+                        print("CHEATS TOGGLED")
                 elif MoreButtonExpand == False and ScreenOpen == False and NextClicked == True:
                     screen = pygame.display.set_mode([600, 900])
                     ScreenOpen = True
-                    print("CHEATS TOGGLED")
+                    if Announcements == True:
+                        print("CHEATS TOGGLED")
                 elif MoreButtonExpand == False and ScreenOpen == True and NextClicked == True:
                     screen = pygame.display.set_mode([340, 900])
                     ScreenOpen = False
-                    print("CHEATS TOGGLED")
+                    if Announcements == True:
+                        print("CHEATS TOGGLED")
 
                     
             if task1.collidepoint(event.pos):
@@ -490,13 +522,13 @@ while running:
     white_buy, white_manager_buy = draw_button(white, 190, white_cost, white_owned, white_manager_cost)
     purple_buy, purple_manager_buy = draw_button(purple, 250, purple_cost, purple_owned, purple_manager_cost)
 
-    CheatTask1 = draw_cheat_button(deepred, 275, 5)
-    TaskAllManagers = AllManagers(deepred, 440, 5)
-    TaskReset = RESET(deepred, 525, 5)
-    TaskClearCash1 = ClearCash(deepred, 355, 5)
+    CheatTask1 = draw_cheat_button(deepred, 280, 0)
+    TaskAllManagers = AllManagers(deepred, 440, 0)
+    TaskReset = RESET(deepred, 525, 0)
+    TaskClearCash1 = ClearCash(deepred, 355, 0)
 
     Task1IncSpeed = IncSpeed(deepred, 440, 50, Speed1str)
-    Task2IncSpeed = IncSpeed(deepred, 440, 100, Speed2str)
+    Task2IncSpeed = IncSpeed(deepred, 440, 100,Speed2str)
     Task3IncSpeed = IncSpeed(deepred, 440, 150, Speed3str)
     Task4IncSpeed = IncSpeed(deepred, 440, 200, Speed4str)
     Task5IncSpeed = IncSpeed(deepred, 440, 250, Speed5str)
@@ -515,7 +547,7 @@ while running:
 
     TaskMoreGame = MoreGame(deepred, 250, 455)
 
-    display_score = font.render('Cash: $' + str(round(score, 2)), True, white, black)
+    display_score = font.render('Cash: $' + str(round(score, 2)), True, white, Backround)
     screen.blit(display_score, (10, 5))
 
     buy_more = font.render('Buy More: ', True, white)
